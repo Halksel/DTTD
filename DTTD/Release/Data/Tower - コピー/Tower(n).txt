@@ -1,0 +1,14 @@
+gradelevel（タワーの最終レベル）
+number(攻撃パターン,単体 1,範囲 2)
+for(0 to gradelevel-1){
+path(画像データのパス)
+infopath（タワー情報の画像のパス)
+upgradeinfopath(アップグレードの情報の画像のパス)
+atkpath（攻撃画像のパス）
+atk（攻撃力）
+spcial(状態異常,通常 0,鈍化 1,)
+interval（攻撃間隔）
+range（攻撃範囲）
+cost（費用）
+}
+

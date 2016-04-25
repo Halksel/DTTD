@@ -1,0 +1,8 @@
+name 	Maxgrade	number
+1 	2 		1
+Picture				Info					UpgradeInfo				AtkEffect
+Atk	State	Attribute	Interval	Range	Cost
+Picture/Tower/tower_arrow.png 	Picture/Tower/tower_arrow_info.png 	Picture/Tower/tower_upgrade_info 	Picture/Tower/tower_arrow_atk.png
+2	0	1		0.5		60	50
+Picture/Tower/tower_arrow.png	Picture/Tower/tower_arrow_info.png	Picture/Tower/tower_upgrade_info	Picture/Tower/tower_arrow_atk.png
+6	0	1		0.4		70	150
