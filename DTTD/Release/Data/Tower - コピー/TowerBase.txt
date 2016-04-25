@@ -1,4 +1,0 @@
-ATK=5
-Interval=1.5
-Range=60
-Cost=50

@@ -1,5 +1,0 @@
-path
-hp
-speed
-atk
-money

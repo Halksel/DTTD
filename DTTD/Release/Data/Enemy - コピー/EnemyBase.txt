@@ -1,3 +1,0 @@
-HP=10
-Speed=2
-Money=20

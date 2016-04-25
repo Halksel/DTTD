@@ -1,4 +1,0 @@
-curetime(完治までの時間)
-sliptime（ダメージ等の発生間隔）
-damege
-Slowflag
