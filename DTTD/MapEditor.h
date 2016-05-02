@@ -29,21 +29,31 @@ void Split(vector<string> &, const string&, const string&);
 string itos(int);
 double GetMax(deque<double>);
 int GetMaxDDT(vector<vector<int>>);
+enum MAPSTATE{
+	ROAD = 0,
+	PUT,
+	NOPUT,
+	START,
+	GOAL,
+	MAPSTATESIZE,
+};
+
 
 //ˆÈ‰ºƒNƒ‰ƒX
 class MapFragment{
 private:
 	string filePath;
-	int drawH,x,y,width,height,attribute;
+	int drawH, x, y, width, height;
+	MAPSTATE attribute;
 public:
 	MapFragment();
-	MapFragment(int,int,int,string);
+	MapFragment(int,int,MAPSTATE,string);
 	void Update();
 	void Draw();
 	void DrawKind();
 	bool LoadFail();
 	bool InMouseClick();
-	int GetAttribute();
+	MAPSTATE GetAttribute();
 	Pos GetPos();
 };
 

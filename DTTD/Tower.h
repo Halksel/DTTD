@@ -9,11 +9,13 @@ const int WAVETOWERMAX = 4;
 enum STATE{
 	HEALTH = 0,
 	SLOW,
+	STATESIZE,
 };
 
 enum ATTRIBUTE{
-	ALL =0,
+	NORMAL =0,
 	FLY,
+	ATTRIBUTESIZE,
 };
 
 

@@ -12,7 +12,7 @@ bool checkAll(){
 }
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
-	SetMainWindowText("");
+	SetMainWindowText("ñnèbãYâÊ");
 	SetGraphMode(WinWidth, WinHeight, 16), ChangeWindowMode(TRUE);
 	DxLib_Init(), SetDrawScreen(DX_SCREEN_BACK), ChangeFontType(DX_FONTTYPE_ANTIALIASING);
 	SetAlwaysRunFlag(TRUE);

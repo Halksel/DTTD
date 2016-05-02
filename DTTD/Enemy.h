@@ -45,18 +45,18 @@ private:
 
 	Status status;
 	STATE state;
-	int kind, maxhp, sx, sy, vx, vy,*now,bfrprog;//種類、最大体力、状態異常、現在の座標を添え字に変換したもの、速度成分、現在ウェーブのポインタ、直前の進行度
+	int kind, maxhp, sx, sy, vx, vy,bfrprog;//種類、最大体力、状態異常、現在の座標を添え字に変換したもの、速度成分、現在ウェーブのポインタ、直前の進行度
 	int deathSoundH,atkedflag;
 	int R, G, B,colY = 40;
 	double birthtime;
 	vector<int> hp, atk, money;
 	vector<double> speed;
-	vector<ATTRIBUTE> attribute;
-	bool existflag,priorityflag,directflag,particleflag,effectflag,aflag,oncebirth;//生存フラグ、優先されるべきか、方向が求まったかどうか,Particleのフラグ,攻撃フラグ,一度生まれたか
 	Pos startSuf;//初期座標の添え字
 	Rect rect;
 public:
-	int progress,id;
+	int progress,id,*now;
+	vector<ATTRIBUTE> attribute;
+	bool existflag,priorityflag,directflag,particleflag,effectflag,aflag,oncebirth;//生存フラグ、優先されるべきか、方向が求まったかどうか,Particleのフラグ,攻撃フラグ,一度生まれたか
 	Enemy();
 	~Enemy() {};
 	Enemy(int,int *,string,int,int,int);

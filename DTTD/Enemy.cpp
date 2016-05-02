@@ -183,7 +183,16 @@ Enemy::Enemy(int wavenum,int *_now,string filepath,int _kind,int _x, int _y){
 }
 
 bool Enemy::operator<(const Enemy &e) const{//—v’ˆÓI‰‰ŽZŽq‚ð‹t‚É’è‹`‚µ‚Ä‚¢‚Ü‚·
-	return progress>e.progress;
+	if (priorityflag) return true;
+	else if (attribute[*now] == e.attribute[*e.now]) {
+		return progress > e.progress;
+	}
+	else if(e.attribute[*e.now] == NORMAL && attribute[*now] != NORMAL){
+		return true;
+	}
+	else if(e.attribute[*e.now] != NORMAL && attribute[*now] == NORMAL){
+		return false;
+	}
 }
 
 void Enemy::Initilize(){
@@ -232,7 +241,7 @@ void Enemy::Draw(Enemy *e){
 				DrawExtendGraph(e->x, e->y,e->x+e->width*expWRate,e->y+e->height*expHRate, e->handle, TRUE);
 				SetDrawBright(255,255,255);
 			}
-			if (e->progress == 1000) {
+			if (e->priorityflag) {
 				DrawBox(e->x,e->y-10,e->x+e->width*expWRate,e->y,Green,TRUE);
 				DrawBox(e->x+e->width,e->y-10,e->x+(1.0 * e->hp[*e->now]/e->maxhp)*e->width,e->y,Red,TRUE);
 			}
@@ -268,19 +277,9 @@ int Enemy::Move(Enemy *e){
 				e->vy = dy[routeDir[e->sx][e->sy]];
 				e->directflag = true;//•ûŒü‚ª’è‚Ü‚Á‚½
 				if (!e->priorityflag) {//—Dæ“x‚ª‚‚­‚È‚¢ê‡‚Ì‚Ý
-					if (e->attribute[*e->now] != 0) {
-						e->progress = e->route[e->sx][e->sy] + 1000;
-					}
-					else {
-						e->progress = e->route[e->sx][e->sy];
-					}
+					e->progress = e->route[e->sx][e->sy];
 				}
-				if (e->attribute[*e->now] != 0) {
-					e->bfrprog = e->route[e->sx][e->sy] + 1000;
-				}
-				else {
-					e->bfrprog = e->route[e->sx][e->sy];
-				}
+				e->bfrprog = e->route[e->sx][e->sy];
 			}
 			else {//ˆÚ“®’†
 				if (e->vx > 0 && e->x <= (e->sx + e->vx) * e->width*expWRate + BASISX + e->width*expWRate) {
@@ -421,9 +420,7 @@ void Enemy::DrawFourPoint() {
 }
 
 void Enemy::SetPriorityFlag(bool f){
-	if (progress < 1000) {
 		priorityflag = f;
-	}
 }
 
 void Enemy::SetProgress(int _p){

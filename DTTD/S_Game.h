@@ -4,22 +4,12 @@
 #include "Tower.h"
 #include "Enemy.h"
 #include "KeyConfig.h"
-#include "ColTrees.h"
-#include "Smartptr.h"
 
 using namespace std;
 
 const int Size = 40;
 static const double DeltaTime = 0.01;
 extern Particle particle;
-
-enum{
-	ROAD = 0,
-	PUT,
-	NOPUT,
-	START,
-	GOAL,
-};
 
 class MouseVisual{
 	int handle;

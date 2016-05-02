@@ -380,8 +380,8 @@ void S_Game::Draw(){
 			for (auto it = enemies.begin(); it != enemies.end(); ++it) {
 				(*it)->Draw((*it));
 				if (DEBUGMODE) {
-					DrawFormatString((it - enemies.begin()) * 30, 500, Black, "%d", (*it)->progress);
-					DrawFormatString((it - enemies.begin()) * 30, 540, Black, "%d", (*it)->id);
+					DrawFormatString((it - enemies.begin()) * 45, 500, Black, "%d", (*it)->attribute[*(*it)->now]);
+					DrawFormatString((it - enemies.begin()) * 45, 540, Black, "%d", (*it)->id);
 				}
 			}
 			for (auto it = waveTowers.begin(); it != waveTowers.end(); ++it) {
@@ -498,6 +498,7 @@ void S_Game::EnemyUpdate(){
 			it = enemies.erase(it);
 		}
 	}
+	sort(enemies.begin(), enemies.end());
 }
 //‘S–Å‚È‚çFalse
 bool S_Game::ExistEnemies(){
@@ -597,9 +598,8 @@ void S_Game::TowerAttack() {
 	for (auto it = onField.begin(); it != onField.end(); ++it){
 		it->UpdateOnField(&(*it));
 		if ((it)->Interval()){//UŒ‚o—ˆ‚é
-			sort(enemies.begin(), enemies.end());
 			for (auto it2 = enemies.begin(); it2 != enemies.end(); ++it2){
-				if ( (*it2)->Exist() && ( (*it2)->GetAttribute() == ALL || (*it2)->GetAttribute() == it->GetAttribute())) {//‘ÎÛ‚Í¶‚«‚Ä‚¢‚é
+				if ( (*it2)->Exist() && ( (*it2)->GetAttribute() == NORMAL || (*it2)->GetAttribute() == it->GetAttribute())) {//‘ÎÛ‚Í¶‚«‚Ä‚¢‚é
 					if (RectCollision((*it2)->GetRect(), (it)->GetCircle())) {//UŒ‚”ÍˆÍ“à‚É‘¶İ‚·‚é‚È‚ç
 						it->EPSet((*it2)->GetPosition());
 						(*it2)->SetStatus(it->GetState());
