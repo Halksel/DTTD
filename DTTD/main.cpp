@@ -31,7 +31,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 		//if (SkipFrame == 0) {
 			ClearDrawScreen();
 			sceneMgr.Draw();
-			GT->FPS_Draw();
+			//GT->FPS_Draw();
 			mv.Draw();
 			SkipFrame = GT->FPS_GetSkipFrameNum();
 		/*}

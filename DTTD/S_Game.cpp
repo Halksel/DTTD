@@ -87,7 +87,7 @@ void UI::SetVisible(bool f){
 Field::Field(){
 	pause = UI(380,menuHeight,"Picture/UI/pause.png",true,true,false);
 	retry = UI(295, 300, "Picture/UI/Button_Retry.png",false,false,true);
-	trash = UI(640,410,"Picture/UI/Trash.jpg",true,false,false);
+	trash = UI(640,410,"Picture/UI/trash.png",true,false,false);
 	speed = UI(420, menuHeight, "Picture/UI/speedup.png", true, true, false);
 }
 

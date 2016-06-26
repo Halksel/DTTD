@@ -4,7 +4,7 @@
 const int BASISX = 68;
 const int BASISY = 18;
 
-static bool DEBUGMODE = true;
+static bool DEBUGMODE = false;
 const int WinWidth = DEBUGMODE ? 880 : 680;
 const int WinHeight = DEBUGMODE ? 780 : 480;
 
