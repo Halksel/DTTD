@@ -49,15 +49,15 @@ void GlobalTimer::FPS_Update(){
 		minFPS = min(minFPS, FPS);
     }
     mCount++;
-	//DT = (BASEFPS-mWaitTime)/ BASEFPS;
+	DT = (BASEFPS-mWaitTime)/ BASEFPS;
 	if (count)
-		time += 0.01;
+		time += 0.01 * DT;
 	return;
 }
 
 void GlobalTimer::FPS_Draw() {
 	if (FPS != 0) {
-		//DrawFormatString(500, 600, Red, "%lf", DT);
+		DrawFormatString(500, 600, Red, "%lf", DT);
 		if (DEBUGMODE) {
 			DrawFormatString(WinWidth - GetDrawStringWidth("DebugMode: MaxFPS %.1f :MinFPS %.1f", 36), WinHeight - 20, Black, "DebugMode:");
 		}
