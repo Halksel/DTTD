@@ -4,7 +4,7 @@ using namespace std;
 
 MapFragment::MapFragment(){};
 
-MapFragment::MapFragment(int _x, int _y, MAPSTATE _attribute, string _filePath) :x(_x), y(_y), attribute(_attribute), filePath(_filePath){
+MapFragment::MapFragment(int _x, int _y, MAPSTATE _kind, string _filePath) :x(_x), y(_y),kind(_kind), filePath(_filePath){
 	drawH = LoadGraph(filePath.c_str());
 	GetGraphSize(drawH, &width, &height);
 };
@@ -14,10 +14,11 @@ void MapFragment::Update(){
 }
 
 void MapFragment::Draw(){
+	DrawGraph(x,y,drawH,TRUE);
 }
 
 void MapFragment::DrawKind(){
-	DrawFormatString(x,y, StringColor, " %d", attribute);
+	DrawFormatString(x,y, StringColor, " %d", kind);
 }
 
 bool MapFragment::LoadFail(){
@@ -28,8 +29,8 @@ bool MapFragment::InMouseClick(){
 	return x <= getMouseX() && (getMouseX() <= x + width*expWRate) && y <= getMouseY() && (getMouseY() <= y + height * expHRate) && getMouseLeftPress(PRESS_ONCE);
 }
 
-MAPSTATE MapFragment::GetAttribute(){
-	return attribute;
+MAPSTATE MapFragment::GetKind(){
+	return kind;
 }
 
 Pos MapFragment::GetPos(){
@@ -40,7 +41,7 @@ MapViewer::MapViewer(){};
 MapViewer::MapViewer(int n){
 	filePath = PATH + itos(n) + ".csv";
 	SetData(n);
-	GetGraphSize(handle, &mapW, &mapH);
+	//GetGraphSize(handle, &mapW, &mapH);
 };
 
 void MapViewer::Update(){
@@ -49,19 +50,23 @@ void MapViewer::Update(){
 		it->Update();
 		if (it->InMouseClick()){
 			select = it - fragments.begin();
-			attribute = it->GetAttribute();
+			kind = it->GetKind();
 			selectPos = it->GetPos();
 			atbflag = true;
 		}
 	}
 	if (!atbflag){
-		attribute = -1;
+		kind = -1;
 		select = -1;
 	}
 }
 
 void MapViewer::Draw(){
-	DrawExtendGraph(BASISX, BASISY + 40, BASISX + mapW*expWRate, BASISY + 40 + mapH*expHRate, handle, TRUE);
+	//DrawExtendGraph(BASISX, BASISY + 40, BASISX + mapW*expWRate, BASISY + 40 + mapH*expHRate, handle, TRUE);
+	DrawFormatString(120,100,black,"%d",filepaths.size());
+	for (auto n : fragments) {
+		n.Draw();
+	}
 	if (getKeySwitched(KEY_INPUT_V)) {
 		for (auto n : fragments) {
 				n.DrawKind();
@@ -93,7 +98,7 @@ void MapViewer::DrawRoute(){
 void MapViewer::SetData(int number){
 	mwidth = 0;
 	mheight = 0;
-	handle = LoadGraph(("Picture/Map/Map" + itos(number) + ".png").c_str());
+	//handle = LoadGraph(("Picture/Map/Map" + itos(number) + ".png").c_str());
 	string str;
 	stringstream ss;
 	ifstream ifs;
@@ -152,13 +157,13 @@ void MapViewer::SetData(int number){
 		ss.clear();
 		ss.str(ds[1]);
 		ss >> y;
-		if (y > 0) {
-			fragments[pos(j, k)] = MapFragment(j*width*expWRate + BASISX, k*height*expHRate + BASISY+Y, (MAPSTATE)x, filepaths[y - 1]);
-			if (x == START) {
+		if (y >= 0) {
+			fragments[pos(j, k)] = MapFragment(j*width*expWRate + BASISX, k*height*expHRate + BASISY+Y, (MAPSTATE)y, filepaths[y]);
+			if (y == START) {
 				startPos = Pos(j*width*expWRate + X, k*height*expHRate + Y);
 				startSuf = Pos(j, k);
 			}
-			else if (x == GOAL) {
+			else if (y == GOAL) {
 				endPos = Pos(j*width*expWRate + X, k*height*expHRate + Y);
 				endSuf = Pos(j, k);
 			}
@@ -184,8 +189,8 @@ int MapViewer::GetSelect(){
 	return select;
 }
 
-int MapViewer::GetSelectAttribute(){
-	return attribute;
+int MapViewer::GetSelectKind(){
+	return kind;
 }
 
 Pos MapViewer::GetSelectPos(){
@@ -204,11 +209,11 @@ void MapViewer::SetStoERoute(){
 		x = tmp.x, y = tmp.y;
 		for (int i = 0; i < 4; ++i){
 			if (saferange(x + dx[i], y + dy[i], mwidth, mheight)){
-				if (fragments[pos(x + dx[i], y + dy[i])].GetAttribute() == ROAD && route[x + dx[i]][y + dy[i]] > route[x][y]){
+				if (fragments[pos(x + dx[i], y + dy[i])].GetKind() == ROAD && route[x + dx[i]][y + dy[i]] > route[x][y]){
 					route[x + dx[i]][y + dy[i]] = route[x][y]+1;
 					qpos.push(Pos(x + dx[i], y + dy[i]));
 				}
-				if (fragments[pos(x + dx[i], y + dy[i])].GetAttribute() == GOAL && route[x + dx[i]][y + dy[i]] > route[x][y]){
+				if (fragments[pos(x + dx[i], y + dy[i])].GetKind() == GOAL && route[x + dx[i]][y + dy[i]] > route[x][y]){
 					route[x + dx[i]][y + dy[i]] = route[x][y]+1;
 				}
 			}

@@ -20,7 +20,7 @@ const int X = 0, Y = 40;//マップの原点
 const string PATH = "Data/Map/SaveData";
 const int dx[8] = { 1, -1, 0, 0, 1, 1, -1, -1 };//右、左、下、上
 const int dy[8] = { 0, 0, 1, -1, 1, -1, 1, -1 };
-const double expWRate = 0.5, expHRate = 0.5;
+const double expWRate = 1, expHRate = 1;
 
 //グローバル変数	
 
@@ -32,8 +32,8 @@ int GetMaxDDT(vector<vector<int>>);
 enum MAPSTATE{
 	ROAD = 0,
 	PUT,
-	NOPUT,
 	START,
+	NOPUT,
 	GOAL,
 	MAPSTATESIZE,
 };
@@ -44,7 +44,7 @@ class MapFragment{
 private:
 	string filePath;
 	int drawH, x, y, width, height;
-	MAPSTATE attribute;
+	MAPSTATE kind;
 public:
 	MapFragment();
 	MapFragment(int,int,MAPSTATE,string);
@@ -53,14 +53,14 @@ public:
 	void DrawKind();
 	bool LoadFail();
 	bool InMouseClick();
-	MAPSTATE GetAttribute();
+	MAPSTATE GetKind();
 	Pos GetPos();
 };
 
 class MapViewer{
 private:
 	string filePath;
-	int handle,width, height, mwidth, mheight, imagenum, select, attribute,mapW,mapH;
+	int handle,width, height, mwidth, mheight, imagenum, select, kind,mapW,mapH;
 	bool fail,atbflag;
 	Pos startPos, endPos,startSuf,endSuf,selectPos;
 	vector<int> drawHs;
@@ -77,7 +77,7 @@ public:
 	void SetData(int);
 	bool Fail();
 	int GetSelect();
-	int GetSelectAttribute();
+	int GetSelectKind();
 	Pos GetSelectPos();
 	void SetStoERoute();
 	vector<vector<int>>* GetRoute();

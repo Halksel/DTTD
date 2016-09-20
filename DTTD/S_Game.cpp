@@ -303,7 +303,7 @@ void S_Game::Update(){
 			tower.reset(new Tower());
 		}
 		if (getMouseLeftPress(PRESS_ONCE) && selecttower) {
-			if (mv.GetSelectAttribute() == PUT) {
+			if (mv.GetSelectKind() == PUT) {
 				SetTower(mv.GetSelectPos().x, mv.GetSelectPos().y);
 			}
 		}

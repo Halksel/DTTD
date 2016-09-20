@@ -1,11 +1,9 @@
 #include"KeyConfig.h"
-#include<vector>
 
 int KeyConfig::map[256] = {};
 vector<string> KeyConfig::keyinfo;
 vector<string> KeyConfig::keyname;
 vector<string> KeyConfig::keydef;
-
 
 KeyConfig::KeyConfig() {
 	flag = false;
