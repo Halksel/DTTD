@@ -1,4 +1,5 @@
 #include"KeyConfig.h"
+#include<vector>
 
 int KeyConfig::map[256] = {};
 vector<string> KeyConfig::keyinfo;
