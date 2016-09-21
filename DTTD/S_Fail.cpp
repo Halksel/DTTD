@@ -5,7 +5,7 @@ S_Fail::S_Fail(ISceneChanger* changer,Data *_data) : BaseScene(changer),data(_da
 
 void S_Fail::Initialize(){
 	failHandle = LoadGraph("Picture/Screen/Stage_Failed.png");
-	retry = UI(295, 300, "Picture/UI/Button_Retry.png",true,false,false);
+	retry = UI(Pos(295, 300), "Picture/UI/Button_Retry.png",true,false,false);
 }
 
 void S_Fail::Finalize(){}

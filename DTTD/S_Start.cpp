@@ -21,9 +21,9 @@ void S_Start::Initialize(){
 	UIs.resize(mapnum);
 	for (int i = 0; i < mapnum; ++i) {
 		string s = "Picture/UI/Map" + itos(i + 1) + ".png";
-		UIs[i] = UI(100+i*120,100+(i/2)*120,s.c_str(),true,true,false);
+		UIs[i] = UI(Pos(100+i*120,100+(i/2)*120),s.c_str(),true,true,false);
 	}
-	config = UI(280, 400, "Picture/UI/Config.png", true, true, false);
+	config = UI(Pos(280, 400), "Picture/UI/Config.png", true, true, false);
 }
 
 void S_Start::Finalize(){}

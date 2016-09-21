@@ -27,7 +27,7 @@ private:
 public:
 	UI(){};
 	~UI() {};
-	UI(int, int, string, bool, bool,bool);
+	UI(Pos, string, bool, bool,bool);
 	void Draw(UI *);
 	void Update(UI *);
 	bool GetFlag();

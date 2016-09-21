@@ -26,7 +26,7 @@ class Tower : public Object{
 	int infoHandle, atkHandle, upgradeInfoHandle,upgradeHandle;
 	int writeSoundH, holdSoundH;
 	static int *money;
-	double atktime,Effectx,Effecty,angle;
+	double atktime,Effectx,Effecty,angle,darktime;
 	bool flag,atkflag,upflag,flag2,flag3,flag4,darkflag;
 	vector<int> atk, range, cost;//アップグレード後のデータまで配列で管理
 	vector<STATE> state;
@@ -38,7 +38,7 @@ class Tower : public Object{
 public:
 	Tower();
 	~Tower() {};
-	Tower(string, int, int, int,int *);
+	Tower(string, int, Pos ,int *);
 	static void Update(Tower *);
 	static void UpdateOnField(Tower *);
 	static void Upgrade(Tower *);
@@ -48,12 +48,12 @@ public:
 	static void DrawRange(Tower *);
 	static void DrawUpgrade(Tower *);
 	void PlaySE(int);
-	void PosSet(int, int);
-	void PosSetRev(int, int);
+	void PosSet(Pos);
+	void PosSetRev(Pos);
 	void EPSet(Pos);
 	void SetDarkflag(bool);
 	void SetAtkTime(double);
-	bool ConfirmPos(int, int);
+	bool ConfirmPos(Pos);
 	bool Interval();
 	int GetNumber();
 	int GetKind();

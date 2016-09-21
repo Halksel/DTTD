@@ -45,8 +45,8 @@ KeyConfig::KeyConfig() {
 		ss.clear();
 	}
 	ifs.close();
-	config = UI(240, 400, "Picture/UI/Config.png", true, true, false);
-	exit = UI(360, 400, "Picture/UI/Exit.png", true, true, false);
+	config = UI(Pos(240, 400), "Picture/UI/Config.png", true, true, false);
+	exit = UI(Pos(360, 400), "Picture/UI/Exit.png", true, true, false);
 }
 
 void KeyConfig::Update() {

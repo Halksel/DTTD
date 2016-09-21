@@ -1,5 +1,4 @@
 #include "S_Game.h"
-#include "CLiner4Tree.h"
 
 using namespace std;
 
@@ -16,9 +15,8 @@ void MouseVisual::Draw(){
 }
 
 //座標、画像パス、可視化フラグ、透過フラグ、切り替えフラグの初期化
-UI::UI(int _x, int _y, string _path, bool _visible, bool _transflag,bool _switchflag) :visible(_visible), transflag(_transflag),switchflag(_switchflag){
-	x = _x;
-	y = _y;
+UI::UI(Pos _p, string _path, bool _visible, bool _transflag,bool _switchflag) :visible(_visible), transflag(_transflag),switchflag(_switchflag){
+	p = _p;
 	path = _path;
 	handle = LoadGraph(_path.c_str());
 	GetGraphSize(handle, &width, &height);
@@ -53,16 +51,16 @@ void UI::Draw(UI* ui){
 	if (ui->visible){
 		if ( ui->pushflag) {
 			SetDrawBright(150, 150, 150);
-			DrawGraph(ui->x, ui->y, ui->handle, ui->transflag);
+			DrawGraph(ui->p.x, ui->p.y, ui->handle, ui->transflag);
 			SetDrawBright(255, 255, 255);
 		}
 		else if (ui->InMousePointer()) {
 			SetDrawBright(200, 200, 200);
-			DrawGraph(ui->x, ui->y, ui->handle, ui->transflag);
+			DrawGraph(ui->p.x, ui->p.y, ui->handle, ui->transflag);
 			SetDrawBright(255, 255, 255);
 		}
 		else{
-			DrawGraph(ui->x, ui->y, ui->handle, ui->transflag);
+			DrawGraph(ui->p.x, ui->p.y, ui->handle, ui->transflag);
 		}
 	}
 }
@@ -73,7 +71,7 @@ bool UI::GetFlag(){
 //見えているなら通常判定、見えていないなら常に偽
 bool UI::InMouseClick(){
 	if (visible){
-		return x <= getMouseX() && (getMouseX() <= x + width) && y <= getMouseY() && (getMouseY() <= y + height) && getMouseLeftPress(PRESS_ONCE);
+		return p.x <= getMouseX() && (getMouseX() <= p.x + width) && p.y <= getMouseY() && (getMouseY() <= p.y + height) && getMouseLeftPress(PRESS_ONCE);
 	}
 	else{
 		return false;
@@ -85,10 +83,10 @@ void UI::SetVisible(bool f){
 
 
 Field::Field(){
-	pause = UI(380,menuHeight,"Picture/UI/pause.png",true,true,false);
-	retry = UI(295, 300, "Picture/UI/Button_Retry.png",false,false,true);
-	trash = UI(640,410,"Picture/UI/trash.png",true,false,false);
-	speed = UI(420, menuHeight, "Picture/UI/speedup.png", true, true, false);
+	pause = UI(Pos(380,menuHeight),"Picture/UI/pause.png",true,true,false);
+	retry = UI(Pos(295, 300), "Picture/UI/Button_Retry.png",false,false,true);
+	trash = UI(Pos(640,410),"Picture/UI/trash.png",true,false,false);
+	speed = UI(Pos(420, menuHeight), "Picture/UI/speedup.png", true, true, false);
 }
 
 Field::Field(int *_life,int *_money,int *_stage,int *_wave){
@@ -105,10 +103,10 @@ Field::Field(int *_life,int *_money,int *_stage,int *_wave){
 	moneyX = 160;
 	waveX = 260;
 	Width = 40;
-	pause = UI(380,menuHeight,"Picture/UI/pause.png",true,true,false);
-	retry = UI(295, 300, "Picture/UI/Button_Retry.png",false,false,true);
-	trash = UI(640,410,"Picture/UI/Trash.jpg",true,false,false);
-	speed = UI(420, menuHeight, "Picture/UI/speedup.png", true, true, false);
+	pause = UI(Pos(380,menuHeight),"Picture/UI/pause.png",true,true,false);
+	retry = UI(Pos(295, 300), "Picture/UI/Button_Retry.png",false,false,true);
+	trash = UI(Pos(640,410),"Picture/UI/trash.png",true,false,false);
+	speed = UI(Pos(420, menuHeight), "Picture/UI/speedup.png", true, true, false);
 }
 
 void Field::Draw() {
@@ -181,7 +179,7 @@ S_Game::S_Game(ISceneChanger* changer) : BaseScene(changer) {
 		Enemy().Initilize();
 		EnemyWaveInit(mv.FindStartPos());
 		Enemy().SetRoute(mv.GetRoute(), mv.GetRouteDir());
-		start = UI(mv.FindStartPos().x + BASISX, mv.FindStartPos().y + BASISY, "Picture/UI/Button_start.png", true, true, true);
+		start = UI( Pos(mv.FindStartPos().x + BASISX, mv.FindStartPos().y + BASISY), "Picture/UI/Button_start.png", true, true, true);
 		LoadTowersData();
 		TowerWaveInit();
 	}
@@ -210,7 +208,7 @@ S_Game::S_Game(ISceneChanger* changer, Data *d) :BaseScene(changer), data(*d) {
 		Enemy().Initilize();
 		EnemyWaveInit(mv.FindStartPos());
 		Enemy().SetRoute(mv.GetRoute(), mv.GetRouteDir());
-		start = UI(mv.FindStartPos().x + BASISX, mv.FindStartPos().y + BASISY, "Picture/UI/Button_start.png", true, true, true);
+		start = UI(Pos(mv.FindStartPos().x + BASISX, mv.FindStartPos().y + BASISY), "Picture/UI/Button_start.png", true, true, true);
 		LoadTowersData();
 		TowerWaveInit();
 	}
@@ -377,13 +375,6 @@ void S_Game::Draw(){
 				DrawFormatString(0, 600, Black, "buildmoney %d", buildmoney);
 				DrawFormatString(0, 480, Black, "%lf,%d,%d", *GT->GetTimePointer(), wavenum, waveenemynum[wave]);
 			}
-			for (auto it = enemies.begin(); it != enemies.end(); ++it) {
-				(*it)->Draw((*it));
-				if (DEBUGMODE) {
-					DrawFormatString((it - enemies.begin()) * 45, 500, Black, "%d", (*it)->attribute[*(*it)->now]);
-					DrawFormatString((it - enemies.begin()) * 45, 540, Black, "%d", (*it)->id);
-				}
-			}
 			for (auto it = waveTowers.begin(); it != waveTowers.end(); ++it) {
 				(*it)->SetDarkflag(money < (*it)->GetCost());
 				(*it)->Draw(it->get());
@@ -396,6 +387,13 @@ void S_Game::Draw(){
 				if (DEBUGMODE) {
 					DrawFormatString((it - onField.begin()) * 60, 550, Black, "%.3f", it->GetInterval());
 					it->DrawRange(&(*it));
+				}
+			}
+			for (auto it = enemies.begin(); it != enemies.end(); ++it) {
+				(*it)->Draw((*it));
+				if (DEBUGMODE) {
+					DrawFormatString((it - enemies.begin()) * 45, 500, Black, "%d", (*it)->attribute[*(*it)->now]);
+					DrawFormatString((it - enemies.begin()) * 45, 540, Black, "%d", (*it)->id);
 				}
 			}
 			if (selecttower) {
@@ -454,7 +452,7 @@ void S_Game::LoadEnemiesData(){
 		}
 		enemylist.resize(enemynum);
 		for (int i = 0; i < enemynum; ++i){
-			enemylist[i] = new Enemy(Enemy(wavenum,&wave,"Data/Enemy/Enemy" + itos(i + 1) + ".csv", i + 1, 0, 0));
+			enemylist[i] = new Enemy(Enemy(wavenum,&wave,"Data/Enemy/Enemy" + itos(i + 1) + ".csv", i + 1, Pos(0, 0)));
 		}
 	}
 	ifs.close();
@@ -468,7 +466,7 @@ void S_Game::EnemyWaveInit(Pos pos){
 			if (kinds[wave][i] == enemylist[j]->GetKind()){//リストからコピー
 				enemies[i] = new Enemy(*enemylist[j]);
 				enemies[i]->SetBirthTime(timings[wave][i]);
-				enemies[i]->PosSet(pos.x, pos.y);
+				enemies[i]->PosSet(pos);
 				enemies[i]->SetID(i);
 				break;
 			}
@@ -547,7 +545,7 @@ void S_Game::LoadTowersData(){
 		}
 		towerlist.resize(towernum);
 		for (int i = 0; i < towernum; ++i){
-			towerlist[i].reset(new Tower("Data/Tower/Tower" + itos(i + 1) + ".csv", i + 1, 0, 0,&money));
+			towerlist[i].reset(new Tower("Data/Tower/Tower" + itos(i + 1) + ".csv", i + 1, Pos(0, 0),&money));
 		}
 	}
 	TowerWaveInit();
@@ -571,7 +569,7 @@ void S_Game::TowerWaveInit(){
 		for (int j = 0; j < towerlist.size(); ++j){
 			if (usinglist[stage][i] == towerlist[j]->GetKind()){//リストからコピー
 				waveTowers[i].reset(new Tower( Tower(*towerlist[j].get())));
-				waveTowers[i]->PosSet(640, i * 60 + 60);
+				waveTowers[i]->PosSet(Pos(640, i * 60 + 60));
 			}
 		}
 	}
@@ -590,7 +588,7 @@ void S_Game::TowerUpdate(){
 		}
 	}
 	if (selecttower){
-		tower->PosSetRev(getMouseX(), getMouseY());
+		tower->PosSetRev(Pos(getMouseX(), getMouseY()));
 	}
 }
 
@@ -620,7 +618,7 @@ void S_Game::TowerAttack() {
 
 void S_Game::SetTower(int x,int y){
 	if (FindTowerInField(x, y) && money - tower->GetCost() >= 0){//まだタワーが置かれておらず、コストが足りているなら
-		tower->PosSet(x, y);
+		tower->PosSet(Pos(x, y));
 		onField.push_back(*tower);
 		money -= tower->GetCost();
 		buildmoney += tower->GetCost();
@@ -633,7 +631,7 @@ void S_Game::SetTower(int x,int y){
 
 bool S_Game::FindTowerInField(int x,int y){
 	for (auto n : onField){
-		if (n.ConfirmPos(x, y)){
+		if (n.ConfirmPos(Pos(x, y))){
 			return false;
 		}
 	}

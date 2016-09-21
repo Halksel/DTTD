@@ -4,9 +4,8 @@ int* Tower::money;
 extern GlobalTimer* GT;
 Tower::Tower(){};
 
-Tower::Tower(string filepath, int _kind, int _x, int _y,int *_money){
-	x = _x;
-	y = _y;
+Tower::Tower(string filepath, int _kind, Pos _p,int *_money){
+	p = _p;
 	nowgrade = -1;
 	kind = _kind;
 	money = _money;
@@ -19,8 +18,7 @@ Tower::Tower(string filepath, int _kind, int _x, int _y,int *_money){
 	flag3 = false;
 	flag4 = false;
 	darkflag = false;
-	Effectx = x;
-	Effecty = y;
+	darktime = 0.3;
 	time = GT->GetTimePointer();
 	
 	count = 0;
@@ -60,27 +58,12 @@ void Tower::Update(Tower *t){
 		t->flag = !t->flag;
 		t->flag2 = true;
 	}
-	if (t->atkflag){
-		t->angle = atan2(t->EPos.y - t->y, t->EPos.x - t->x);
-		if (t->name <= 2){//ここだよ
-			if (t->Effectx == t->EPos.x && t->Effecty == t->EPos.y){
-				t->Effectx == t->EPos.x;
-				t->Effecty == t->EPos.y;
-			}
-			else{
-				t->Effectx += 5 * cos(t->angle);
-				t->Effecty += 5 * sin(t->angle);
-			}
-		}
-		
-	}
-	else {
-		t->Effectx = t->x;
-		t->Effecty = t->y;
-	}
 	//現在時間から攻撃時間を引き、それが今のグレードのインターバルより短いなら攻撃できない
 	if (*t->time - t->atktime > t->interval[t->nowgrade]){
 		t->atkflag = FALSE;
+	}
+	if (*t->time - t->atktime > t->darktime) {
+		t->darkflag = false;
 	}
 }
 
@@ -115,23 +98,23 @@ void Tower::Upgrade(Tower *t){
 
 void Tower::Draw(Tower *t){
 	if (t->InMousePointer() || t->darkflag){//ポインターに刺されたとき暗化
-		DrawBox(t->x, t->y, t->x + t->width*expWRate, t->y + t->height*expHRate, Black, TRUE);
+		DrawBox(t->p.x, t->p.y, t->p.x + t->width*expWRate, t->p.y + t->height*expHRate, Black, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_ADD, 200);
-		DrawExtendGraph(t->x, t->y,t->x+t->width*expWRate,t->y+t->height*expHRate, t->handle, TRUE);
+		DrawExtendGraph(t->p.x, t->p.y,t->p.x+t->width*expWRate,t->p.y+t->height*expHRate, t->handle, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 	else{
-		DrawExtendGraph(t->x, t->y,t->x+t->width*expWRate,t->y+t->height*expHRate, t->handle, TRUE);
+		DrawExtendGraph(t->p.x, t->p.y,t->p.x+t->width*expWRate,t->p.y+t->height*expHRate, t->handle, TRUE);
 	}
 	if (t->handle == -1){
-		DrawString(t->x, t->y, ("Fail" + t->paths[t->nowgrade]).c_str(), Black);
+		DrawString(t->p.x, t->p.y, ("Fail" + t->paths[t->nowgrade]).c_str(), Black);
 	}
 }
 //タワーの情報をだしてくれる
 void Tower::DrawInfo(Tower *t){
 	if (t->InMousePointer()){
-		DrawRotaGraph(t->x - 100, t->y, 0.3, 0, t->infoHandle, TRUE);
-		DrawFormatString(t->x - 90, t->y, Black, "%d,%d,%d", t->cost[0], t->cost.at(1), t->atk[t->nowgrade]);
+		DrawRotaGraph(t->p.x - 100, t->p.y, 0.3, 0, t->infoHandle, TRUE);
+		DrawFormatString(t->p.x - 90, t->p.y, Black, "%d,%d,%d", t->cost[0], t->cost.at(1), t->atk[t->nowgrade]);
 	}
 }
 
@@ -154,13 +137,13 @@ void Tower::DrawAttack(Tower *t){
 }
 
 void Tower::DrawRange(Tower *t){
-	DrawCircle(t->x + t->width*expWRate / 2, t->y + t->height*expHRate / 2, t->range[t->nowgrade], Red, FALSE, 2);
+	DrawCircle(t->p.x + t->width*expWRate / 2, t->p.y + t->height*expHRate / 2, t->range[t->nowgrade], Red, FALSE, 2);
 }
 
 void Tower::DrawUpgrade(Tower *t){
 
 	if (t->InMousePointer()){
-		DrawRotaGraph(t->x + 25, t->y - 50, 0.3, 0, t->upgradeInfoHandle, TRUE);
+		DrawRotaGraph(t->p.x + 25, t->p.y - 50, 0.3, 0, t->upgradeInfoHandle, TRUE);
 	}
 }
 
@@ -173,14 +156,13 @@ void Tower::PlaySE(int n) {
 	}
 }
 
-void Tower::PosSet(int _x, int _y){
-	x = _x;
-	y = _y;
+void Tower::PosSet(Pos _p){
+	p = _p;
 }
 //タワーの見かけ上の真ん中にセット
-void Tower::PosSetRev(int _x, int _y){
-	x = _x - width*expWRate / 2 ;
-	y = _y - height*expHRate / 2 ;
+void Tower::PosSetRev(Pos _p){
+	p.x = _p.x - width*expWRate / 2 ;
+	p.y = _p.y - height*expHRate / 2 ;
 }
 
 void Tower::EPSet(Pos P){
@@ -196,8 +178,8 @@ void Tower::SetAtkTime(double t) {
 }
 
 //そこにタワーがあるかどうか
-bool Tower::ConfirmPos(int _x, int _y){
-	return (_x == x && _y == y);
+bool Tower::ConfirmPos(Pos _p){
+	return p == _p;
 }
 //攻撃できるかどうか
 bool Tower::Interval(){
@@ -216,10 +198,9 @@ int Tower::GetKind(){
 }
 
 int Tower::GetAtk(){
-	Effectx = x;
-	Effecty = y;
 	atktime = *time+DeltaTime;
 	atkflag = true;
+	darkflag = true;
 	return atk[nowgrade];
 }
 
@@ -244,10 +225,11 @@ double Tower::GetInterval() {
 }
 
 Pos Tower::GetPos() {
-	return Pos(x,y);
+	return p;
 }
 
 Circle Tower::GetCircle(){
-	circle = Circle(x + width*expWRate / 2, y + height*expHRate / 2, range[nowgrade]);
+	//circle = Circle(x + width*expWRate / 2, y + height*expHRate / 2, range[nowgrade]);
+	circle = Circle( circle.p.GetCenter(Pos(width*expWRate,height*expHRate)),r);
 	return move(circle);
 }
