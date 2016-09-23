@@ -3,4 +3,4 @@ hp
 speed
 atk
 money
-kind = 0(All),1(fly),
+attribute = 0(All),1(fly),

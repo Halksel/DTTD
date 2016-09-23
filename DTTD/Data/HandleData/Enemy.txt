@@ -1,0 +1,8 @@
+7
+Picture/Enemy/enemy_rabbit.png
+Picture/Enemy/enemy_flog.png
+Picture/Enemy/shadowrabbit.png
+Picture/Enemy/enemy_rabbit.png
+Picture/Enemy/enemy_flog.png
+Picture/Enemy/shadowrabbit.png
+Picture/Enemy/enemy_bird.png

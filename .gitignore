@@ -27,3 +27,6 @@ DTTD/Debug/DTTD.tlog/link.write.1.tlog
 *.pch
 *.tlog
 *.lastbuildstate
+DTTD/Data/PlayData/Data3.txt
+DTTD/Log.txt
+DTTD/Debug/Log.txt

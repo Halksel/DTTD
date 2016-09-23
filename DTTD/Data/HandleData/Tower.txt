@@ -1,0 +1,20 @@
+5 3 4 
+Picture/Tower/tower_arrow.png	Picture/Tower/tower_arrow_info.png 	Picture/Tower/tower_upgrade_info.png 	Picture/Tower/tower_arrow_atk.png
+Picture/Tower/tower_arrow.png	Picture/Tower/tower_arrow_info.png 	Picture/Tower/tower_upgrade_info.png 	Picture/Tower/tower_arrow_atk.png
+Picture/Tower/tower_arrow.png	Picture/Tower/tower_arrow_info.png 	Picture/Tower/tower_upgrade_info.png 	Picture/Tower/tower_arrow_atk.png
+
+Picture/Tower/tower_numa.png	Picture/Tower/tower_numa_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_numa_atk.png
+Picture/Tower/tower_numa.png	Picture/Tower/tower_numa_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_numa_atk.png
+Picture/Tower/tower_numa.png	Picture/Tower/tower_numa_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_numa_atk.png
+
+Picture/Tower/tower_sword.png	Picture/Tower/tower_sword_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_sword_atk.png
+Picture/Tower/tower_sword.png	Picture/Tower/tower_sword_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_sword_atk.png
+Picture/Tower/tower_sword.png	Picture/Tower/tower_sword_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_sword_atk.png
+
+Picture/Tower/tower_numa.png	Picture/Tower/tower_numa_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_numa_atk.png
+Picture/Tower/tower_numa.png	Picture/Tower/tower_numa_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_numa_atk.png
+Picture/Tower/tower_numa.png	Picture/Tower/tower_numa_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_numa_atk.png
+
+Picture/Tower/tower_wind.png	Picture/Tower/tower_wind_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_wind_atk.png
+Picture/Tower/tower_wind.png	Picture/Tower/tower_wind_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_wind_atk.png
+Picture/Tower/tower_wind.png	Picture/Tower/tower_wind_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_wind_atk.png

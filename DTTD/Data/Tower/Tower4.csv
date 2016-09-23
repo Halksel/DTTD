@@ -1,8 +1,5 @@
 name 	Maxgrade	number
-2 	2 		2
-Picture				Info					UpgradeInfo				AtkEffect
+4	2 		2
 Atk	State	Attribute	Interval	Range	Cost
-Picture/Tower/tower_numa.png	Picture/Tower/tower_numa_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_numa_atk.png
 1	1	0		2		30	200
-Picture/Tower/tower_numa.png	Picture/Tower/tower_numa_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_numa_atk.png
 2	1	0		2		50	600

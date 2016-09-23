@@ -1,8 +1,5 @@
 name 	Maxgrade	number
 5 	2 		2
-Picture				Info					UpgradeInfo				AtkEffect
 Atk	State	Attribute	Interval	Range	Cost
-Picture/Tower/tower_wind.png	Picture/Tower/tower_wind_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_wind_atk.png
 3	0	0		1.2		50	400
-Picture/Tower/tower_wind.png	Picture/Tower/tower_wind_info.png	Picture/Tower/tower_upgrade_info.png	Picture/Tower/tower_wind_atk.png
 9	0	0		1.2		60	1200

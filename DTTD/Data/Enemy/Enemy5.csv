@@ -1,6 +1,5 @@
-Picture/Enemy/enemy_flog.png
 HP	Attribute	Speed	ATK	Money
-20	0		0.5	1	20
+20	0		0.5	1	21
 65	0		0.5	1	25
 130	0		0.5	1	30
 
